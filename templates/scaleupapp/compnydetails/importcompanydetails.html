@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %} {% block title %}Add Company Info
+{% endblock title %} {% block content %}
+<div class="az-content-breadcrumb">
+  <span>Dashboard</span>
+  <span>Company Details</span>
+  <span>Import</span>
+</div>
+
+<div class="component-item">
+  <div class="row row-sm">
+    <div class="col-md-6 offset-md-3">
+      <form
+        class="shadow rounded p-3"
+        action=""
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <div class="form-group">
+          <p class="mg-b-10">Select User</p>
+              <select class="form-control select2" name="user_name">
+                <option label="">Select User Name</option>
+                {% for users  in user %}
+                <option value="{{users.id}}">{{users.first_name}} {{users.last_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+          <input type="file" name="excel_file" class="form-control" id="file"  />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-az-primary btn-block">Add</button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block scripts %}{% endblock scripts %}

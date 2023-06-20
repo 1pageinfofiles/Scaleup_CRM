@@ -1,0 +1,5 @@
+scaleup\__pycache__
+scaleupapp\__pycache__
+__pycache__
+.env
+db.sqlite3

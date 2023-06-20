@@ -1,0 +1,142 @@
+{% extends 'layouts/base.html' %} 
+{% block title %}Company Details{% endblock title %}
+{% block content %}
+<div class="az-content-breadcrumb">
+    <span>Dashboard</span>
+    <span>Company Details</span>
+    <span>List</span>
+  </div>
+<div class="d-flex justify-content-end my-2">
+    {% if request.user.is_superuser %}<a href="{% url 'export-compnay-details' %}" class="btn btn-az-primary"> + Export </a>{% endif %}
+    {% if request.user.is_superuser %}<a href="{% url 'import-compnay-details' %}" class="btn btn-az-primary"> + Import </a>{% endif %}
+    <a href="{% url 'add-compnay-details' %}" class="btn btn-az-primary"> + Add </a>
+</div>
+<div class="d-flex justify-content">
+    <form class="rounded p-3" action="" method="GET">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="mg-b-10">Select User</p>
+                        <select class="form-control select2" name="user_name">
+                        <option value="">Select User Name</option>
+                        {% for users  in user %}
+                        <option value="{{users.id}}">{{users.first_name}} {{users.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p class="mg-b-10">Catalogue Status</p>
+                        <select class="form-control select2" name="catalogue_status">
+                        <option value="">Catalogue Status</option>
+                        {% for catalogueStatuses  in catalogueStatus %}
+                        <option value="{{catalogueStatuses.id}}">{{catalogueStatuses.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-az-primary btn-block">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="table-responsive table-sti">
+  <table class="table table-striped mg-b-0">
+    <thead>
+      <tr>
+        <th>Sr No.</th>
+        <th>Catalogue Status</th>
+        <th>Business Name</th>
+        <th>Customer Name</th>
+        <th>Contact No</th>
+        {% comment %} <th>Alt Mobile No</th> {% endcomment %}
+        <th>Email</th>
+        {% comment %} <th>Link</th> {% endcomment %}
+        {% comment %} <th>Remarks</th> {% endcomment %}
+        <th>Status</th>
+        {% comment %} <th>Last Update</th>
+        <th>Assigned To</th> {% endcomment %}
+        <th>action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for rows in page_objects %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{rows.catalogue_status}}</td>
+                <td>{{rows.business_name}}</td>
+                <td>{{rows.customer_name}}</td>
+                <td>{{rows.mobile}}</td>
+                {% comment %} <td>{{rows.alt_mobile}}</td> {% endcomment %}
+                <td>{{rows.email}}</td>
+                {% comment %} <td>{{rows.links}}</td>
+                <td>{{rows.remarks}}</td> {% endcomment %}
+                <td>
+                    {% if rows.status == 'A' %}
+                    <span class="badge badge-success">Active</span>
+                    {% elif rows.status == 'P' %}
+                    <span class="badge badge-primary">Pending</span>
+                    {% elif rows.status == 'I' %}
+                    <span class="badge badge-dark">Inactive</span>
+                    {% else %}
+                    <span class="badge badge-danger">Deleted</span>
+                    {% endif %}
+
+                </td>
+                {% comment %} <td>{{rows.updated_at|date:"F j, Y, g:i a"}}</td>
+                <td>{{rows.user.first_name}} {{rows.user.last_name}}</td> {% endcomment %}
+                <td>
+                    <a href="{% url 'view-compnay-details' rows.id %}" title="view" class="btn btn-sm btn-az-primary"><i class="far fa-eye"></i></button>
+                    <a href="{% url 'change-compnay-details' rows.id %}" title="change" class="btn btn-sm btn-az-primary"><i class="typcn typcn-export-outline"></i></button>
+                    <a href="{% url 'edit-compnay-details' rows.id %}" title="edit" class="btn btn-sm btn-az-primary"><i class="typcn typcn-edit"></i></button>
+                </td>
+            </tr>
+            <tr>
+            {% empty %}
+            <tr>
+               
+                <td colspan="12" class="text-center">No Records Found </td>
+                    
+            </tr>
+            
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="pagination">
+    <ul class="pagination justify-content-center">
+        {% if page_objects.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_objects.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+
+        {% for num in page_objects.paginator.page_range %}
+            {% if num == page_objects.number %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_objects.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_objects.next_page_number }}">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+</div>
+<!-- table-responsive -->
+
+<hr class="mg-y-30" />
+{% endblock content %} {% block scripts %}{% endblock scripts %}

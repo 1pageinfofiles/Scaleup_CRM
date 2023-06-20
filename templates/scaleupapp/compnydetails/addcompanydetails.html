@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %} {% block title %}Add Company Info{% endblock title %} {% block content %}
+<div class="az-content-breadcrumb">
+  <span>Dashboard</span>
+  <span>Company Details</span>
+  <span>Add</span>
+</div>
+
+<div class="component-item">
+  <div class="row row-sm">
+    <div class="col-md-6 offset-md-3">
+      <form class="shadow rounded p-3" action="" method="POST">
+        <div class="d-flex justify-content-center bg-primary text-white py-2">
+            <h5 class="text">Add Company Details</h5>
+        </div>
+        {% csrf_token %} {{forms.as_p}}
+        <button type="submit" class="btn btn-az-primary btn-block">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block scripts %}{% endblock scripts %}

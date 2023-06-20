@@ -1,0 +1,69 @@
+{% extends 'layouts/base.html' %} {% block title %}Get Data{% endblock title %}
+{% block content %}
+<div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+  <div class="container">
+    <div class="az-content-left az-content-left-components">
+      <div class="component-item">
+        <label>UI Elements</label>
+        <nav class="nav flex-column">
+          <a href="elem-buttons.html" class="nav-link">Buttons</a>
+          <a href="elem-dropdown.html" class="nav-link">Dropdown</a>
+          <a href="elem-icons.html" class="nav-link">Icons</a>
+        </nav>
+        <label>Forms</label>
+        <nav class="nav flex-column">
+          <a href="form-elements.html" class="nav-link">Form Elements</a>
+        </nav>
+        <label>Charts</label>
+        <nav class="nav flex-column">
+          <a href="chart-chartjs.html" class="nav-link">ChartJS</a>
+        </nav>
+
+        <label>Tables</label>
+        <nav class="nav flex-column">
+          <a href="table-basic.html" class="nav-link">Basic Tables</a>
+        </nav>
+      </div>
+      <!-- component-item -->
+    </div>
+    <!-- az-content-left -->
+    <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+      <div class="az-content-breadcrumb">
+        <span>Components</span>
+        <span>Forms</span>
+        <span>Form Elements</span>
+      </div>
+      <h2 class="az-content-title">Form Elements</h2>
+
+      <div class="az-content-label mg-b-5">Form Input &amp; Textarea</div>
+      <p class="mg-b-20">
+        A basic form control input and textarea with disabled and readonly mode.
+      </p>
+
+      <form class="needs-validation was-validated" method="POST" action="">
+        <div class="row row-sm">
+          <div class="col-lg-4">
+            <div class="form-group has-success mg-b-0">
+              {% csrf_token %}
+              <textarea
+                rows="3"
+                class="form-control mg-t-20"
+                name="keyword_search"
+                placeholder="Textarea (success state)"
+                required
+              ></textarea>
+              <span class="input-group-btn d-flex justify-content-center py-2">
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+            <!-- form-group -->
+          </div>
+        </div>
+        <!-- row -->
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block scripts %}{% endblock scripts %}
